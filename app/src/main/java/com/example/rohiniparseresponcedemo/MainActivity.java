@@ -29,6 +29,7 @@ public class MainActivity extends AppCompatActivity {
 
 
 
+
   //  private RetrofitAdapter retrofitAdapter;
     private RecyclerView recyclerView;
     Spinner spinner,subsubject;
@@ -102,16 +103,18 @@ public class MainActivity extends AppCompatActivity {
 
         Call<String> call = api.getString();
 
+        /// tresponce is parsed here
+
         call.enqueue(new Callback<String>() {
             @Override
-            public void onResponse(Call<String> call, Response<String> response) {
+            public void onResponse(Call<String> call, Response<String> response) {   // imp get resonce in strin format
               //  Log.i("Responsestring", response.body());
                 //Toast.makeText()
                 if (response.isSuccessful()) {
                     if (response.body() != null) {
                        // Log.i("onSuccess", response.body().toString());
 
-                        String jsonresponse = response.body().toString();
+                        String jsonresponse = response.body().toString();  /// responce send to methos
                         writeRecycler(jsonresponse);
 
                     } else {
@@ -129,25 +132,25 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
-    private void writeRecycler(String jsonresponse) {
+    private void writeRecycler(String jsonresponse) {  /// responce is in method as string
 
         try {
-            JSONObject jsonObject = new JSONObject(jsonresponse);
+            JSONObject jsonObject = new JSONObject(jsonresponse);/// responce get into json object
 
-           JSONArray jsonArray = jsonObject.getJSONArray("TeData");
-             arrayList1 = new ArrayList();
-                     arrayList2 = new ArrayList();
-            for(int i=0;i<jsonArray.length();i++)
+           JSONArray jsonArray = jsonObject.getJSONArray("TeData");// from object get json array
+             arrayList1 = new ArrayList();// created simple arraylist for name
+                     arrayList2 = new ArrayList();// aray list for sub subject name
+            for(int i=0;i<jsonArray.length();i++)/// lop for multiple values
             {
                 try {
-                    JSONObject jobj=jsonArray.getJSONObject(i);
+                    JSONObject jobj=jsonArray.getJSONObject(i);// arraylist contains json objects so one by one it take
 
-                    int id=jobj.getInt("Tid");
+                    int id=jobj.getInt("Tid"); // from object get id to match
 
 
 
                     String subject,subsubject;
-                    if(id== 101200002)  // compare your id here
+                    if(id== 101200002)  // compare your id here if id is match get that objecs name and sub subject name
                     {
                         username=jobj.getString("fname");
                         tvusername.setText(username);
@@ -184,12 +187,12 @@ public class MainActivity extends AppCompatActivity {
         Log.e("sub subject responce",""+arrayList2);
 
 
-        ArrayAdapter<String> adapter = new ArrayAdapter<String>(MainActivity.this,
+        ArrayAdapter<String> adapter = new ArrayAdapter<String>(MainActivity.this,////////// subject spinnar
                 android.R.layout.simple_spinner_item, arrayList1);
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spinner.setAdapter(adapter);
 
-        ArrayAdapter<String> adapter2 = new ArrayAdapter<String>(MainActivity.this,
+        ArrayAdapter<String> adapter2 = new ArrayAdapter<String>(MainActivity.this,// sub subject spiner
                 android.R.layout.simple_spinner_item, arrayList2);
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         subsubject.setAdapter(adapter2);
