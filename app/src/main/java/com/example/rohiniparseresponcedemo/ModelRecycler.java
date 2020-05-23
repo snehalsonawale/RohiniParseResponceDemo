@@ -3,6 +3,15 @@ package com.example.rohiniparseresponcedemo;
 public class ModelRecycler {
 
     String fname,lname,Subject_Name,SubSubject_Name;
+    int id;
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
 
     public String getFname() {
         return fname;
